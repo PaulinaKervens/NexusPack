@@ -1,0 +1,10 @@
+A good compressor must handle more than ordinary text.
+- Empty text file.
+- File containing only one repeated character.
+- File containing spaces and punctuation.
+- Accented characters and multilingual text.
+- Very small files where compression might increase file size.
+- Invalid paths and corrupted compressed files.
+- Decompression of files produced by our compressor.
+
+
