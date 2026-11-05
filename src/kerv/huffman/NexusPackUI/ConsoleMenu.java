@@ -1,5 +1,5 @@
 
-package kerv.NexusPack;
+package kerv.huffman.NexusPackUI;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -12,20 +12,15 @@ import java.util.Scanner;
  */
 public class ConsoleMenu {
 
+    /** Scanner object to read user command input */
     private final Scanner scanner;
 
-    /**
-     *
-     * @param args
-     */
-    static void main(String[] args) {
-        ConsoleMenu menu = new ConsoleMenu();
-        menu.menu();
-    }
-
+    /** Class constructor */
     public ConsoleMenu() {
+        // Initialize scanner
         scanner = new Scanner(System.in);
     }
+
 
     /**
      * Displays the main menu and executes the selected option.
@@ -42,9 +37,11 @@ public class ConsoleMenu {
     }
 
     /**
+     * GetUserChoice method.
+     * <p>
      * Prompts the user for a menu choice between 1 and 3.
      * Handles invalid text inputs and out-of-range numbers.
-     *
+     * </p>
      * @return the user's menu selection
      */
     private int getUserChoice() {
@@ -53,6 +50,7 @@ public class ConsoleMenu {
                 System.out.print("Choose an option: ");
                 int userInput = scanner.nextInt();
 
+                // Check if the input is in the range
                 if (userInput >= 1 && userInput <= 3) {
                     return userInput;
                 }

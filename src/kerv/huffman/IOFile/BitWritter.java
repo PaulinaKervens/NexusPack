@@ -1,4 +1,4 @@
-package kerv.BitOperation;
+package kerv.huffman.IOFile;
 
 public class BitWritter {
 }

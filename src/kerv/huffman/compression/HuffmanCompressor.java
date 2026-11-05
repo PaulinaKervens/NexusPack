@@ -1,4 +1,4 @@
-package kerv.compressor;
+package kerv.huffman.compression;
 
 /** Coordinate compression */
 public class HuffmanCompressor {

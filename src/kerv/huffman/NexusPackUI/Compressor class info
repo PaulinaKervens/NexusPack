@@ -1,0 +1,56 @@
+A good compressor must handle more than ordinary text
+----------------------------------------------------------
+- Empty text file.
+- File containing only one repeated character.
+- File containing spaces and punctuation.
+- Accented characters and multilingual text.
+- Very small files where compression might increase file size.
+- Invalid paths and corrupted compressed files.
+- Decompression of files produced by our compressor.
+
+A. HuffmanNode class
+------------------------------------------------------------
+HuffmanNode represents a node in the Huffman tree.
+That has as attribute :
+    1) A character (for a leaf node).
+    2) A frequency (number of occurrences).
+    3) A reference to its left child.
+    4) A reference to its right child.
+
+C. HuffmanTree class
+------------------------------------------------------------
+1. Receive the frequency information.
+2. Create leaf nodes.
+3. Insert them into the Min-Priority Queue.
+4. Remove the two minimum-frequency nodes.
+5. Combine them into a parent node.
+6. Insert the parent back into the queue.
+7. Repeat until one root remains.
+8. Generate the binary codes by traversing the tree.
+The left branch represents 0, and the right branch represents 1
+
+5. Decompressor workflow
+----------------------------------------------------------
+1. Read and validate the .huf header.
+2. Reconstruct the frequency table.
+3. Rebuild the Huffman Tree.
+4. Read the encoded bits.
+5. Traverse the tree to identify each original byte.
+6. Write the reconstructed bytes to a .txt file.
+7. Validate the output.
+
+
+8. Implementation sequence
+------------------------------------------------------------------------------
+Stage       Component                           Priority            Status
+------------------------------------------------------------------------------
+1	        Project setup and packages	        First               Completed
+2	        HuffmanNode	                        High
+3	        MinHeap	                            High
+4	        MinPriorityQueue	                High
+5	        FrequencyAnalyzer	                High
+6	        HuffmanTree	                        High
+7	        BitWriter / BitReader	            High
+8	        Compression / decompression	        High
+9	        Console interface	                Final integration
+10	        Testing and documentation	        Final

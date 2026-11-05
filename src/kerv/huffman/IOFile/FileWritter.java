@@ -1,4 +1,4 @@
-package kerv.IOFile;
+package kerv.huffman.IOFile;
 
 /*** Manage file writing **/
 public class FileWritter {
