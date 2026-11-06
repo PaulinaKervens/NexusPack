@@ -1,0 +1,74 @@
+HuffmanNode Class Documentation
+-------------------------------------------------
+
+1. Purpose
+The 'HuffmanNode' class represents a node in the Huffman coding binary tree.
+
+A node can represent either:
+    a) A leaf node:
+        Stores an individual byte symbol and its frequency.
+    b) An internal node:
+        Stores the combined frequency of its children
+        and references to its left and right child nodes.
+
+This class implements 'Comparable<HuffmanNode>' to allow nodes to be compared
+by frequency when stored in the custom Min-Priority Queue.
+
+
+2. Attributes
+    a) symbol (int)             : Stores the byte symbol value (0–255). Internal nodes use -1.
+    b) frequency (int)          : Stores the number of occurrences of a symbol or the combined frequency of a subtree.
+    c) leftChild (HuffmanNode)  : References the left child node.
+    d) rightChild (HuffmanNode) : References the right child node.
+
+
+All attributes are private and final, making the nodes immutable after construction, by not implemented setter/mutator.
+
+
+3. Constructors
+    a)Leaf Node Constructor :
+        * Creates a leaf node using a symbol and its frequency.
+        * Stores the symbol value.
+        * Stores the frequency.
+        * Initializes both child references to null.
+
+    b) Internal Node Constructor :
+        * Creates an internal node using its combined frequency and two child references.
+        * Assigns -1 to the symbol because internal nodes do not represent individual symbols.
+        * Stores the combined frequency.
+        * References the left and right children.
+
+
+4. Methods
+Method description:
+    a) getSymbol() (int)                    : Returns the symbol stored in the node.
+    b) getFrequency() (int)                 : Returns the node's frequency.
+    c) getLeftChild() (HuffmanNode)         : Returns the left child reference.
+    d) getRightChild() (HuffmanNode)        : Returns the right child reference.
+    e) isLeaf() (boolean)                   : Determines whether the node has no children.
+    f) compareTo(HuffmanNode other) (int)   : Compares two nodes based on their frequencies.
+
+
+5. The isLeaf() Method
+A leaf node is a node that has no children.
+The method checks whether both [leftChild] and [rightChild] are null.
+
+It returns:
+    * true  : when both children are null.
+    * false : when at least one child exists.
+
+
+6. The compareTo() Method
+The [compareTo()] method compares the frequencies of two Huffman nodes.
+It allows the custom Min-Priority Queue to prioritize nodes with smaller frequencies.
+This is important during Huffman tree construction because the two nodes with the smallest
+frequencies must be selected first.
+
+
+7. Role in the Project
+'HuffmanNode' is a fundamental component of the Huffman compression algorithm.
+It provides the structure needed to build the Huffman binary tree.
+The custom Min-Priority Queue organizes these nodes by frequency,
+and the Huffman tree uses them to generate binary codes for compression and decompression.
+The class is responsible only for representing individual tree nodes and their relationships.
+It does not perform file reading, compression, or decompression.

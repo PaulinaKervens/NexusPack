@@ -1,4 +1,4 @@
-package kerv.huffman.algorithm;
+package kerv.huffman.algorithm.HuffmanTree;
 
 /**  Build the tree and generate codes **/
 
