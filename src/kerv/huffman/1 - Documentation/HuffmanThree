@@ -1,0 +1,41 @@
+HuffmanThree Class Documentation
+-------------------------------------------------
+1. Class responsibility
+The HuffmanTree class will be responsible for:
+    1. Building a Huffman tree from character frequencies.
+    2. Using your custom MyPriorityQueue (binary Min-Heap).
+    3. Combining nodes according to their frequencies.
+    4. Maintaining the final root node.
+    5. Providing access to the completed tree.
+
+The algorithm follows these steps:
+    1. Create a leaf node for every character and its frequency.
+    2. Insert all leaf nodes into your Min-Priority Queue.
+    3. Extract the two nodes with the smallest frequencies.
+    4. Create a new internal node whose frequency is the sum of those two frequencies.
+    5. Make the two extracted nodes its children.
+    6. Insert the new internal node back into the priority queue.
+    7. Repeat until only one node remains.
+    8. That remaining node becomes the root of the Huffman tree.
+
+
+2) Attribute
+    - root (HuffmanNode) : Store the root of the tree.
+
+2) Method
+    a) HuffmanTree() constructor
+        - Receive any argument
+        - Set the Huffman node to null
+
+    b) buildTree()
+        1. Receive the HashMap containing symbols and frequencies.
+        2. Iterate through the entries.
+        3. Create a leaf HuffmanNode for each entry.
+        4. Insert each leaf into your custom MyPriorityQueue.
+        5. Combines the two smallest nodes into internal nodes.
+        6. Repeats until one node remains.
+        7. Assigns that final node to root.
+
+    3) isEmpty() : Just check if the tree is empty or not.
+
+    4) getRoot() : Return the root value.

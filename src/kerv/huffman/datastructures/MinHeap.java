@@ -1,7 +1,7 @@
 package kerv.huffman.datastructures;
 
 /** Implement the underlying binary heap */
-public class MinHeap<E> implements MinHeapInterface<E>{
+public class MinHeap<E> implements MinHeapInterface<E> {
     /**
      * Inserts an element into the min-heap, maintaining the heap property.
      *
