@@ -31,29 +31,27 @@ public class HuffmanTree {
      *
      * @param frequencyTable
      */
-    public void buildTree (HashMap<Integer, Integer> frequencyTable) {
-        MinPriorityQueue<HuffmanNode, Integer> minPriorityQueue = null;
+    /*public void buildTree (HashMap<Integer, Integer> frequencyTable) {
+       // MinPriorityQueue<HuffmanNode> minPriorityQueue = null;
         
         // Retrieve each symbol and frequency from the table
         for (Map.Entry<Integer, Integer> entry : frequencyTable.entrySet()) {
             int symbol = entry.getKey();
             int frequency = entry.getValue();
 
-            // Create the leaf node
-            minPriorityQueue.insert(
-                    frequency,
+            // Create a leaf node and insert it to the PriorityQueue
+            /*minPriorityQueue.insert(
                     new HuffmanNode(symbol, frequency)
             );
-
         }
+
+        boolean combine = true;
 
         // Combining all smallest nodes into internal nodes.
-        while () {
-
-        }
 
 
-    }
+
+    }*/
 
 
     /**

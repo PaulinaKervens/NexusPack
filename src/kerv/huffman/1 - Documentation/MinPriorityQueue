@@ -1,0 +1,8 @@
+Priority Queue design
+    - Element: HuffmanNode
+    - Priority: HuffmanNode.frequency
+    - Comparison: Ascending frequency (smallest first).
+    - Implementation: Binary Min-Heap.
+    - Storage: Array-based structure.
+
+

@@ -1,4 +1,4 @@
-package kerv.huffman.datastructures.MinPriorityQueue;
+package kerv.huffman.datastructures.MinHeap;
 
 import kerv.huffman.algorithm.HuffmanNode.HuffmanNode;
 
@@ -9,17 +9,16 @@ import kerv.huffman.algorithm.HuffmanNode.HuffmanNode;
  *
  * @param <E> The type of elements maintained by this heap.
  */
-public interface MinHeapInterface<E> {
+public interface MinPriorityInterface<T> {
 
     /**
-     * Inserts an element into the min-heap, maintaining the heap property.
+     * Inserts a node with his frequency, maintaining the heap property.
      * It stores a HuffmanNode as its value and use frequency as its priority key.
      *
-     * @param node An huffman node could be a leaf or internal node
-     * @param frequency The frequency of that node
+     * @param node A huffman node could be a leaf or internal node
      * @return {@code true} if the insertion was successful, {@code false} otherwise
      */
-    boolean insert (int frequency, HuffmanNode node);
+    boolean insert (HuffmanNode node);
 
     /**
      * Removes and returns the minimum element (the root) from the min-heap,
@@ -27,17 +26,26 @@ public interface MinHeapInterface<E> {
      *
      * @return the minimum element, or {@code null} if the heap is empty
      */
-    E removeMin();
+    T removeMin();
 
     /**
      * Retrieves, but does not remove, the minimum element from the min-heap.
      *
      * @return the minimum element, or {@code null} if the heap is empty
      */
-    E peekMinimum();
+    T peekMin();
 
     /**
-     * Builds or reorganizes the heap structure from an unordered collection of elements.
+     * Check whether the queue is empty.
+     *
+     * @return true if the priorityQueue is empty; otherwise false.
      */
-    void buildHeap();
+    boolean isEmpty();
+
+    /**
+     * Return the PriorityQueue size.
+     * @return A number represent the PriorityQueue size.
+     */
+    int getSize();
+
 }
