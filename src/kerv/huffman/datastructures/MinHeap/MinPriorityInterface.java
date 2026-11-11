@@ -18,7 +18,7 @@ public interface MinPriorityInterface<T> {
      * @param node A huffman node could be a leaf or internal node
      * @return {@code true} if the insertion was successful, {@code false} otherwise
      */
-    boolean insert (HuffmanNode node);
+    void insert (T node);
 
     /**
      * Removes and returns the minimum element (the root) from the min-heap,
@@ -41,6 +41,13 @@ public interface MinPriorityInterface<T> {
      * @return true if the priorityQueue is empty; otherwise false.
      */
     boolean isEmpty();
+
+    /**
+     * Check whether the queue is full.
+     *
+     * @return true if the priorityQueue is full; otherwise false.
+     */
+     boolean isFull();
 
     /**
      * Return the PriorityQueue size.
