@@ -1,5 +1,6 @@
 package kerv.huffman.datastructures.MinHeap;
 
+import java.io.Writer;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -103,14 +104,61 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
     private void siftUp(int index) {
         // Continue as long as we are not at the root and the child is smaller than its parent
         while (index > 0 && comparator.compare(heap[index], heap[getParent(index)]) < 0) {
-            // If parent is bigger swap them
-            swap(index, getParent(index));
+            swap(index, getParent(index));      // If parent is bigger swap them
             // Update the index to check if we must swap the new parent too
             index = getParent(index);
         }
     }
 
+    /**
+     * Sifts the element at the specified index downward to restore the min-heap property.
+     * The while loop follows these steps:
+     * 1. Check whether the left child exists.
+     * 2. Calculate the left and right child indices.
+     * 3. Set smallerChild = leftChild.
+     * 4. If the right child exists and is smaller, assign smallerChild = rightChild.
+     * 5. Compare the parent (current node) with the smaller child.
+     * 6. If the parent is larger, swap and update index; otherwise, break.
+     * 7. Repeat.
+     *
+     * @param index the starting index to sift down from
+     */
+    private void siftDown(int index) {
+        // Ensures a left child exists
+        while (getLeftChild(index) < size) {
+            // Get each child index
+            final var smallerChild = getSmallerChild(index);
 
+            // Compare the smaller child with the parent
+            if(comparator.compare(heap[index], heap[smallerChild]) > 0) {
+                swap(index, smallerChild);  // swaps when the parent is larger
+                index = smallerChild;       // initialise the new index of parent
+            } else {
+                break;      // stops if the heap property is already satisfied.
+            }
+        }
+    }
+
+    /**
+     * Determines which child (left or right) has the smaller value according to the comparator.
+     * Defaults to the left child if the right child does not exist or is not smaller.
+     *
+     * @param index the parent index whose children are being evaluated
+     * @return the index of the child with the smaller value
+     */
+    private int getSmallerChild(int index) {
+        int leftChild = getLeftChild(index), rightChild = getRightChild(index);
+        // Assign leftChild by default,
+        // because in a complete tree
+        // we start from left to right
+        int smallerChild = leftChild;
+
+        // Check if left child exists and is smaller than right child (if right exists)
+        if (rightChild < size && comparator.compare(heap[rightChild], heap[leftChild]) < 0) {
+            smallerChild = rightChild;      // If yes we assign it to the variable smaller
+        }
+        return smallerChild;
+    }
 
     /**
      * Removes and returns the minimum element (the root) from the min-heap,
