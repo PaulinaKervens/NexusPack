@@ -1,7 +1,7 @@
 package kerv.huffman.datastructures.MinHeap;
 
-import java.io.Writer;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 
@@ -19,6 +19,7 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
 
     /** Determines element priority */
     private final Comparator<T> comparator;
+
 
     /**
      * Constructs a priority queue using the specified comparator and default capacity.
@@ -50,11 +51,10 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
 
 
     /**
-     * Inserts a node with his frequency, maintaining the heap property.
-     * It stores a HuffmanNode as its value and use frequency as its priority key.
+     * Inserts an element into the priority queue while maintaining
+     * the Min-Heap property.
      *
-     * @param node A huffman node could be a leaf or internal node
-     * @return {@code true} if the insertion was successful, {@code false} otherwise
+     * @param node the element to be inserted
      */
     @Override
     public void insert(T node) throws IllegalArgumentException {
@@ -69,13 +69,14 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
         // Insert the node to the array
         heap[size++] = node;
 
-
+        // Restores the Min-Heap ordering property.
         siftUp(size - 1);
     }
 
+
     /***
      * Method that expands the underlying array when full by doubling its capacity. <br>
-     * 1) Update the capacity by double it. Making the time of complexity 0(1). <br>
+     * 1) Update the capacity by double it. Making the time of complexity 0(n). <br>
      * 2) Creates a tempo array, initialise it with the new capacity.<br>
      * 3) Copy all elements from the array to the tempo array.<br>
      * 4) Point the old array to the new array.
@@ -98,6 +99,7 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
 
     /**
      * Sifts the element at the specified index upward to restore the min-heap property.
+     * <p>Time complexity: 0(Log n)</p>
      *
      * @param index the starting index of the element
      */
@@ -110,6 +112,7 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
         }
     }
 
+
     /**
      * Sifts the element at the specified index downward to restore the min-heap property.
      * The while loop follows these steps:
@@ -120,6 +123,7 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
      * 5. Compare the parent (current node) with the smaller child.
      * 6. If the parent is larger, swap and update index; otherwise, break.
      * 7. Repeat.
+     * <p>Time complexity: 0(Log n)</p>
      *
      * @param index the starting index to sift down from
      */
@@ -140,7 +144,7 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
     }
 
     /**
-     * Determines which child (left or right) has the smaller value according to the comparator.
+     * Determines which child (left or right) has smaller priority according to the comparator.
      * Defaults to the left child if the right child does not exist or is not smaller.
      *
      * @param index the parent index whose children are being evaluated
@@ -163,29 +167,48 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
     /**
      * Removes and returns the minimum element (the root) from the min-heap,
      * then reorganizes the heap to maintain its order.
+     * <p>Time complexity: 0(Log n)</p>
      *
-     * @return the minimum element, or {@code null} if the heap is empty
+     * @return The minimum element, or {@code throws NoSuchElementException} if the heap is empty
      */
     @Override
     public T removeMin() {
-        return null;
+        // Check if the MinPriorityQueue is empty
+        if (isEmpty())
+            throw new NoSuchElementException("Empty tree");
+
+        // Store the root element (minimum value) before replacing it
+        T heapRoot = heap[0];
+
+        // Replace the root with the last element in the heap
+        heap[0] = heap[size - 1];
+
+        // Decrease the size to remove the last position from the heap
+        size--;
+
+        // Remove the pointer of the old element definitively
+        heap[size] = null;
+
+        // Restore the Min-Heap property starting from the root
+        if (!isEmpty())
+            siftDown(0);
+
+        // Return the original minimum element
+        return heapRoot;
     }
 
     /**
      * Retrieves, but does not remove, the minimum element from the min-heap.
      *
-     * @return the minimum element, or {@code null} if the heap is empty
+     * @return the minimum element, or {@code throws NoSuchElementException} if the heap is empty
      */
     @Override
     public T peekMin() {
-        return null;
-    }
-
-    /**
-     * Builds or reorganizes the heap structure from an unordered collection of elements.
-     */
-    private void buildHeap() {
-
+        // Check if the queue is not empty first
+        if (isEmpty())
+            throw new NoSuchElementException("Empty tree");
+        // Return the root value
+        return heap[0];
     }
 
 
@@ -205,6 +228,7 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
         heap[index2] = temp;
     }
 
+
     /**
      * Check whether the queue is empty.
      *
@@ -214,6 +238,7 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
     public boolean isEmpty() {
         return size == 0;
     }
+
 
     /**
      * Check whether the queue is full.
@@ -225,6 +250,7 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
         return size == heap.length;
     }
 
+
     /**
      * Return the PriorityQueue size.
      *
@@ -234,6 +260,7 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
     public int getSize() {
         return size;
     }
+
 
     /**
      * Calculates the index of the parent node for a given node index.
@@ -245,6 +272,7 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
         return (index - 1) / 2;
     }
 
+
     /**
      * Calculates the index of the left child for a given node index.
      *
@@ -254,6 +282,7 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
     private int getLeftChild(int index) {
         return (2 * index) + 1;
     }
+
 
     /**
      * Calculates the index of the right child for a given node index.

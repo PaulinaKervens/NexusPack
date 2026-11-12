@@ -7,7 +7,7 @@ import kerv.huffman.algorithm.HuffmanNode.HuffmanNode;
  * is always smaller than or equal to its child nodes, ensuring the minimum
  * element is always at the root.
  *
- * @param <E> The type of elements maintained by this heap.
+ * @param <T> The type of elements maintained by this heap.
  */
 public interface MinPriorityInterface<T> {
 
@@ -16,7 +16,6 @@ public interface MinPriorityInterface<T> {
      * It stores a HuffmanNode as its value and use frequency as its priority key.
      *
      * @param node A huffman node could be a leaf or internal node
-     * @return {@code true} if the insertion was successful, {@code false} otherwise
      */
     void insert (T node);
 
