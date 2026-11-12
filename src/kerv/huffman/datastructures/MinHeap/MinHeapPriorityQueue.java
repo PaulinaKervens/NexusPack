@@ -1,7 +1,5 @@
 package kerv.huffman.datastructures.MinHeap;
 
-
-import kerv.huffman.algorithm.HuffmanNode.HuffmanNode;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -70,6 +68,8 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
         // Insert the node to the array
         heap[size++] = node;
 
+
+        siftUp(size - 1);
     }
 
     /***
@@ -95,26 +95,21 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
     }
 
 
-    private boolean siftUp(int index) {
-
-        return true;
-    }
-
     /**
-     * Swaps two elements in the heap array by their indices.
+     * Sifts the element at the specified index upward to restore the min-heap property.
      *
-     * @param index1 the first index
-     * @param index2 the second index
+     * @param index the starting index of the element
      */
-    private void swap(int index1, int index2) {
-        // Store the value of index1 in a temporary variable
-        // to not lose it when override
-        T temp = heap[index1];
-        // override the index1 value by index2 value
-        heap[index1] = heap[index2];
-        // initialize the index2 value by temp value
-        heap[index2] = temp;
+    private void siftUp(int index) {
+        // Continue as long as we are not at the root and the child is smaller than its parent
+        while (index > 0 && comparator.compare(heap[index], heap[getParent(index)]) < 0) {
+            // If parent is bigger swap them
+            swap(index, getParent(index));
+            // Update the index to check if we must swap the new parent too
+            index = getParent(index);
+        }
     }
+
 
 
     /**
@@ -145,6 +140,22 @@ public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
 
     }
 
+
+    /**
+     * Swaps two elements in the heap array by their indices.
+     *
+     * @param index1 the first index
+     * @param index2 the second index
+     */
+    private void swap(int index1, int index2) {
+        // Store the value of index1 in a temporary variable
+        // to not lose it when override
+        T temp = heap[index1];
+        // override the index1 value by index2 value
+        heap[index1] = heap[index2];
+        // initialize the index2 value by temp value
+        heap[index2] = temp;
+    }
 
     /**
      * Check whether the queue is empty.
