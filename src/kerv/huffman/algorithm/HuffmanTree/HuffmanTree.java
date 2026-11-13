@@ -1,9 +1,9 @@
 package kerv.huffman.algorithm.HuffmanTree;
 
 import kerv.huffman.algorithm.HuffmanNode.HuffmanNode;
-import kerv.huffman.datastructures.MinPriorityQueue.MinPriorityQueue;
+import kerv.huffman.datastructures.MinHeap.MinHeapPriorityQueue;
 
-import java.util.HashMap;
+import java.util.HashMap;   // Accessible to get
 import java.util.Map;
 
 
@@ -15,9 +15,6 @@ public class HuffmanTree {
     /** Stores the root of the completed Huffman tree. */
     private HuffmanNode root;
 
-
-    HashMap<Integer, Integer> frequencyTable;
-
     /**
      * Default constructor.
      */
@@ -27,31 +24,49 @@ public class HuffmanTree {
 
 
     /**
-     * Constructs the Huffman tree using the Min-Priority Queue.
+     * Builds the Huffman coding tree from the given frequency table.
      *
-     * @param frequencyTable
+     * @param frequencyTable a map containing each symbol and its frequency
      */
-    /*public void buildTree (HashMap<Integer, Integer> frequencyTable) {
-       // MinPriorityQueue<HuffmanNode> minPriorityQueue = null;
-        
-        // Retrieve each symbol and frequency from the table
-        for (Map.Entry<Integer, Integer> entry : frequencyTable.entrySet()) {
-            int symbol = entry.getKey();
-            int frequency = entry.getValue();
+    public void buildTree (HashMap<Integer, Integer> frequencyTable) {
+        // Check if the frequency table is not empty to avoid NullPointerException
+        if (frequencyTable == null || frequencyTable.isEmpty()) {
+            root = null;
+            return;
+        }
 
-            // Create a leaf node and insert it to the PriorityQueue
-            /*minPriorityQueue.insert(
-                    new HuffmanNode(symbol, frequency)
+        // Create a MinHeapPriorityQueue
+        MinHeapPriorityQueue<HuffmanNode> minPriorityQueue = new MinHeapPriorityQueue<>(HuffmanNode::compareTo);
+
+        // Populate the priority queue with leaf nodes for each symbol and its frequency
+        for (Map.Entry<Integer, Integer> entry : frequencyTable.entrySet()) {
+            // Retrieve each symbol and frequency from the table
+            // create a new HuffmanNode and insert it to the queue
+            minPriorityQueue.insert(new HuffmanNode(entry.getKey(), entry.getValue()));
+        }
+
+        // Combine nodes until only the root node remains in the queue
+        while (minPriorityQueue.getSize() > 1) {
+            // Get both smaller node from the MinHeapPriorityQueue
+            HuffmanNode left = minPriorityQueue.removeMin();
+            HuffmanNode right = minPriorityQueue.removeMin();
+
+            // Create a combined frequency
+            int combinedFrequency = left.getFrequency() + right.getFrequency();
+
+            // Create a new internal node with the two smaller nodes as children and insert it back
+            minPriorityQueue.insert(
+                    new HuffmanNode(
+                            combinedFrequency,
+                            left,
+                            right
+                    )
             );
         }
 
-        boolean combine = true;
-
-        // Combining all smallest nodes into internal nodes.
-
-
-
-    }*/
+        // The remaining node is the root of the Huffman tree
+        root = minPriorityQueue.removeMin();
+    }
 
 
     /**
@@ -60,7 +75,7 @@ public class HuffmanTree {
      * @return a true value if it empties; otherwise fals;
      */
     public boolean isEmpty() {
-        return root != null;
+        return root == null;
     }
 
     /**
