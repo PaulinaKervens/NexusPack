@@ -1,9 +1,10 @@
 package kerv.huffman.algorithm.FrequencyAnalyzer;
 
 import java.util.HashMap;
-import java.util.Map;
 
-/** Calculate byte frequencies on a file */
+/**
+ * Calculates byte frequencies from raw file data.
+ */
 public class FrequencyAnalyzer {
 
     /**
@@ -13,34 +14,38 @@ public class FrequencyAnalyzer {
      *
      * @param data the byte array to analyze
      * @return a HashMap containing each unique unsigned byte value as a key
-     *         and its frequency as the corresponding value. Otherwise, if the
-     *         input is null, an empty HashMap would be return.
+     *         and its frequency as the corresponding value (returns an empty map if input is empty)
      * @throws IllegalArgumentException if the input byte array is null
      */
-    public static HashMap<Integer, Integer> analyze(byte[] data){
+    public static HashMap<Integer, Integer> analyze(byte[] data) {
         // Check if data is not null
-        if (data == null)
+        if (data == null) {
             throw new IllegalArgumentException("Input data cannot be null.");
+        }
 
-        // Key (Integer): The unsigned byte value (0–255).
-        // Value (Integer): How many times that byte appears.
+        // Calculate and return the frequency table
+        return buildFrequencyTable(data);
+    }
+
+    /**
+     * Helper method that iterates over the byte array and populates the frequency map.
+     *
+     * @param data the byte array to process
+     * @return a HashMap mapping unsigned byte values (0-255) to their occurrence counts
+     */
+    private static HashMap<Integer, Integer> buildFrequencyTable(byte[] data) {
         HashMap<Integer, Integer> frequencyTable = new HashMap<>();
 
-        // Retrieve the current byte from the array.
-        for (int index = 0; index < data.length; index++) {
-            // Convert it into an unsigned integer (0–255).
-            int symbol = Byte.toUnsignedInt(data[index]);
+        for (byte b : data) {
+            // Convert signed byte into an unsigned integer (0–255).
+            int symbol = Byte.toUnsignedInt(b);
 
-            // Check whether that symbol already exists in the HashMap
-            // if yes increment the frequency(key), otherwise insert it
+            // Increment frequency count for the symbol
             frequencyTable.put(symbol, frequencyTable.getOrDefault(symbol, 0) + 1);
         }
 
-        // Return the HashMap either empty or not
         return frequencyTable;
     }
-
-
 }
 
 

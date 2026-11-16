@@ -1,0 +1,80 @@
+========================================================
+                 CompressionResult Class
+========================================================
+
+1. Purpose
+-----------------------
+The 'CompressionResult' class stores the result of a Huffman compression operation
+along with the metadata required to describe the original data. It acts as a data-
+transfer object between the compression and decompression components of NexusPack.
+
+
+2. Responsibilities
+----------------------
+The class is responsible for:
+    - Storing the compressed byte array.
+    - Preserving the frequency table of the original data.
+    - Storing the original uncompressed data size.
+    - Validating the consistency of the frequency table.
+    - Providing safe access to its stored information.
+
+
+3. Attributes
+----------------------
+The class contains three immutable attributes:
+    a) compressedData : byte[] : Contains the resulting compressed data. |
+    b) frequencyTable : HashMap<Integer, Integer> : Maps each unsigned byte symbol
+        (0–255) to its frequency in the original data.
+    c) originalSize : long : Stores the size of the original uncompressed data in bytes.
+
+All attributes are declared 'private final' to prevent reassignment after initialization.
+
+
+4. Constructor and Validation
+-----------------------------
+The constructor initializes the object with compressed data, a frequency table, and the original data size.
+It validates the provided arguments before storing them:
+    - Rejects null compressed data or a null frequency table.
+    - Rejects a negative original data size.
+    - Ensures every symbol is within the valid unsigned byte range (0–255).
+    - Ensures every frequency is positive.
+    - Ensures the sum of all frequencies equals the original data size.
+
+The class also supports empty input files. An empty frequency table is valid when the original data size is zero.
+
+
+5. Immutability and Defensive Copying
+----------------------------------------
+To protect its internal state, the class uses defensive copying.
+    - The constructor clones the compressed byte array.
+    - The constructor creates a new copy of the frequency table.
+    - The compressed data getter returns a cloned array.
+    - The frequency table getter returns a new map.
+
+This prevents external modifications from changing the information stored inside the object.
+The 'originalSize' attribute is a primitive `long`, so it does not require defensive copying.
+
+
+6. Methods
+-------------------------
+    a) CompressionResult(...)   : Initializes the compression result and validates its data.
+    b) frequencyCheck(...)      : Checks symbol validity, frequency validity, and total frequency consistency.
+    c) getCompressedData()      : Returns a defensive copy of the compressed byte array.
+    d) getFrequencyTable()      : Returns a copy of the frequency table.
+    e) getOriginalSize()        : Returns the original uncompressed data size.
+
+
+7. Role in the Project
+------------------------
+'CompressionResult' connects the compression process with the components responsible for
+storing or handling its output. It preserves both the compressed bytes and the frequency
+information needed to reconstruct the Huffman coding structure during decompression.
+By keeping the result data separate from the compression algorithm, the class helps
+maintain modularity, encapsulation, and separation of responsibilities throughout NexusPack.
+
+8. Design Decisions
+------------------------
+    - **Immutable design:**     Prevents the stored result from being modified after construction through the class's public interface.
+    - **Defensive copying:**    Protects mutable data structures from external modification.
+    - **Frequency validation:** Ensures the metadata accurately represents the original data size.
+    - **Empty-file support:**   Allows compression results to represent files containing zero bytes.
