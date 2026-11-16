@@ -1,5 +1,7 @@
 package kerv.huffman.IOFile;
 
-/*** Manage file reading **/
+/**
+ * Manage file reading.
+ **/
 public class FileReader {
 }
