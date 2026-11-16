@@ -1,0 +1,125 @@
+===========================================================================================
+                                MinHeapPriorityQueue design
+===========================================================================================
+
+    - Element: HuffmanNode
+    - Priority: HuffmanNode.frequency
+    - Comparison: Ascending frequency (smallest first).
+    - Implementation: Binary Min-Heap.
+    - Storage: Array-based structure.
+
+
+MinHeapPriorityQueue<T> is a generic priority queue implemented using a Binary Min-Heap.
+Its responsibility is to store elements and organize them according to their priority.
+The element with the smallest priority value is always located at the root of the heap.
+The class is generic (T), meaning it can work with different types of objects without
+being tied to a specific class.
+
+In the NexusPack project, HuffmanNode it used as the element type. The priority is determined
+by a Comparator<T>, which allows the queue to compare two elements without knowing their
+internal structure. For the Huffman implementation, the comparator compares
+nodes using their frequencies.
+
+2. How the Binary Min-Heap Works
+------------------------------------
+A Binary Min-Heap is a complete binary tree where every parent has a priority smaller than
+or equal to its children.
+The smallest element is always at the root.
+The elements is stored inside an array rather than creating actual tree nodes.
+
+Using zero-based indexing:
+    - Parent: (i - 1) / 2
+    - Left child: (2 * i) + 1
+    - Right child: (2 * i) + 2
+These formulas allow us to navigate the binary tree using array indexes.
+
+3. Constructor
+    Purpose: Initializes the priority queue.
+    The constructor receives a Comparator<T> that determines how elements should be compared.
+    It also initializes the internal array, its capacity, and the size.
+    The comparator is important because the queue does not decide priority by itself.
+    It follows the comparison rules provided to it.
+
+4. insert(T node)
+Purpose: Inserts a new element into the priority queue while maintaining the Min-Heap property.
+
+    Main responsibilities:
+        1. Checks whether the argument is null.
+        2. Checks whether the internal array is full.
+        3. Resizes the array if necessary.
+        4. Inserts the element into the next available position.
+        5. Increments the size.
+        6. Calls siftUp() to restore the heap property.
+
+    Why do you need siftUp?
+        When an element is inserted, it is initially placed at the end of the array.
+        However, its priority might be smaller than its parent's priority.
+        Therefore, siftUp() moves the element upward until the Min-Heap property is restored.
+
+5. resize()
+Purpose: Increases the capacity of the internal array when it becomes full.
+    It creates a larger array and copies the existing elements into it.
+    Resizing does not change the number of elements or the heap organization.
+    It only provides additional storage capacity.
+
+6. isFull()
+Purpose: Checks whether the internal array has reached its maximum capacity.
+    This method is useful before inserting a new element because it allows the
+    queue to determine whether resizing is necessary.
+
+7. siftUp(int index)
+Purpose: Restores the Min-Heap property after inserting an element.
+    The method starts at the index of the newly inserted element.
+
+    It then:
+    1. Finds the parent of the current element.
+    2. Compares the current element with its parent.
+    3. If the current element has higher priority, swaps their positions.
+    4. Continues moving upward until the heap property is satisfied or the root is reached.
+    This operation changes the positions of elements but does not change the queue's size.
+
+8. swap(int firstIndex, int secondIndex)
+Purpose: Exchanges two elements inside the internal array.
+    It is a helper method used by other heap operations.
+    Instead of repeating the swapping logic in multiple methods, we centralize it in one method.
+    It only changes element positions, not the size.
+
+9. How MinHeapPriorityQueue Works With HuffmanTree
+    This is where both classes work together.
+
+    Each class has a different responsibility:
+        - MinHeapPriorityQueue manages elements according to their priorities.
+        - HuffmanTree builds the actual Huffman coding tree.
+
+    The process works as follows:
+        1. HuffmanTree receives a frequency table.
+        2. It creates a MinHeapPriorityQueue<HuffmanNode>.
+        3. It supplies a comparator that compares HuffmanNode objects using their frequencies.
+        4. It creates a leaf node for every symbol in the frequency table.
+        5. It inserts those nodes into the priority queue.
+        6. It repeatedly removes the two nodes with the smallest frequencies.
+        7. It combines them into a new internal HuffmanNode.
+        8. It inserts the new internal node back into the priority queue.
+        9. This process continues until only one node remains.
+        That final node becomes the root of the Huffman tree.
+
+10. Important Design Decision: Comparator
+    One important decision we made was to use a comparator instead of passing a
+    separate priority value every time we insert an element.
+
+    Why? Because HuffmanNode already contains its frequency.
+    There is no need to pass the frequency separately when inserting a node.
+    The comparator can access the frequency directly from the node.
+    This makes our priority queue more reusable because it does not need to know
+    anything about HuffmanNode or its frequency.
+
+11. Additional Queue Operations
+    The following operations are also part of the priority queue design:
+        - removeMin(): Removes and returns the element with the smallest priority.
+        - peekMin(): Returns the smallest element without removing it.
+        - siftDown(): Restores the Min-Heap property after removing the root.
+        - isEmpty(): Checks whether the queue contains any elements.
+        - getSize(): Returns the number of elements currently stored.
+
+    These operations complete the functionality needed by HuffmanTree.
+    Their exact implementation should be checked against the current source code.

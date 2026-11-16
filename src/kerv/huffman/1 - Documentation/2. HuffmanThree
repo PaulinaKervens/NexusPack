@@ -1,5 +1,6 @@
-HuffmanThree Class Documentation
--------------------------------------------------
+============================================================================
+                    HuffmanThree Class Documentation
+============================================================================
 1. Class responsibility
 The HuffmanTree class will be responsible for:
     1. Building a Huffman tree from character frequencies.

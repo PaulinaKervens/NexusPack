@@ -1,5 +1,6 @@
-HuffmanNode Class Documentation
--------------------------------------------------
+===========================================================================
+                    HuffmanNode Class Documentation
+============================================================================
 
 1. Purpose
 The 'HuffmanNode' class represents a node in the Huffman coding binary tree.

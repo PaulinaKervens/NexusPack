@@ -5,7 +5,9 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 
-/** Implement the underlying binary heap */
+/**
+ * MinHeapPriorityQueue<T> is a generic priority queue implemented using a Binary Min-Heap.
+ */
 public class MinHeapPriorityQueue<T> implements MinPriorityInterface<T> {
 
     /** Stores the heap elements */

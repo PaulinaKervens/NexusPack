@@ -1,0 +1,13 @@
+==================================================================
+                       Frequency Analyzer
+==================================================================
+
+The frequency analyzer is a class with one method that analyze an array of bytes.
+it contains only one method named Analyzes who takes a given byte array and
+calculates the frequency of each unique byte. Each byte is converted to an unsigned
+integer (0–255) before being stored in the frequency table.
+
+Method :
+    Analyze() : HashMap<Integer, Integer>
+        Method that return a HashMap with the key as frequency, how many times a symbol as
+        been encounter, and a value as symbol who represent a unique symbol of the array bytes.
